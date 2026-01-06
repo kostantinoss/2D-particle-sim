@@ -17,3 +17,8 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 add_executable(main src/main.cpp)
 target_compile_features(main PRIVATE cxx_std_17)
 target_link_libraries(main PRIVATE SFML::Graphics)
+
+# Batched rendering demo
+add_executable(batched_demo src/batched_rendering_demo.cpp)
+target_compile_features(batched_demo PRIVATE cxx_std_17)
+target_link_libraries(batched_demo PRIVATE SFML::Graphics)
