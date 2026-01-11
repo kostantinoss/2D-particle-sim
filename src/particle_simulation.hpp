@@ -19,12 +19,20 @@ public:
         create_particles(total_num_of_particles);
     }
 
-    void update(sf::Time dt, sf::Vector2f mouse_pos = {0, 0}, float force_strength = 0.f) {
+    void update(sf::Time dt, sf::Vector2f mouse_pos = {0, 0}, float force_strength = 0.0f) {
         const int substeps = 2;
         sf::Time sub_dt = dt / static_cast<float>(substeps);
 
+        bool mouse_in_bounds = mouse_pos.x > 0 &&
+                         mouse_pos.x < window_size.x &&
+                         mouse_pos.y > 0 &&
+                         mouse_pos.y < window_size.y;
+                         
         for (int i = 0; i < substeps; i++) {
             for (auto& particle : particles) {
+                if (!mouse_in_bounds) {
+                    force_strength = 0.0f;
+                }
                 physics::apply_mouse_force(particle, mouse_pos, force_strength, sub_dt.asSeconds());
                 physics::update_particle_position(particle, sub_dt);
             }
