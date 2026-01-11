@@ -4,16 +4,16 @@ A real-time particle physics simulation built with C++ and SFML. Features partic
 
 ## Demo
 
-![Simulation startup](assets/demo/sim_startup.gif)
+![Simulation startup](assets/demo/sim_startup.gif) \
 *Particles with gravity and collisions*
 
-![Mouse forces](assets/demo/mouse_forces.gif)
+![Mouse forces](assets/demo/mouse_forces.gif) \
 *Attract and repel particles with mouse*
 
-![Spawn particles](assets/demo/spawn_particles.gif)
+![Spawn particles](assets/demo/spawn_particles.gif) \
 *Press Space to spawn new particles*
 
-![Reset simulation](assets/demo/sim_reload.gif)
+![Reset simulation](assets/demo/sim_reload.gif) \
 *Press R to reset*
 
 ## Features
