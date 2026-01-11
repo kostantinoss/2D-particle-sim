@@ -33,11 +33,52 @@ public:
     }
 
     void draw(sf::RenderTarget& target, sf::RenderStates states) const override {
+        float size = boundaries.size() * 2;
+        sf::VertexArray lines(sf::PrimitiveType::Lines, size);
+        for (int i = 0; i < boundaries.size(); i++) {
+            lines[i * 2].position = boundaries[i].start;
+            lines[i * 2].color = sf::Color::White;
+            lines[i * 2 + 1].position = boundaries[i].end;
+            lines[i * 2 + 1].color = sf::Color::White;
+        }
+        
+        target.draw(lines, states);
+
         for (const auto& particle: particles) {
             target.draw(particle.getShape(), states);
         }
     }
-    
+
+    void reset() {
+        particles.clear();
+        create_particles(max_particles);
+    }
+
+    void spawn_particle() {
+        std::random_device rd;
+        std::mt19937 gen(rd());
+
+        float margin = 150.f;
+        std::uniform_real_distribution<float> dist_x(margin + 15.f, window_size.x - margin - 15.f);
+        std::uniform_real_distribution<float> dist_y(margin + 15.f, margin + 300.f);
+        std::uniform_real_distribution<float> dist_vx(-500.f, 500.f);
+        std::uniform_real_distribution<float> dist_vy(-100.f, 100.f);
+        std::uniform_int_distribution<int> dist_color(50, 255);
+
+        Particle p {};
+        p.set_radius(10.f);
+        p.set_position(sf::Vector2f(dist_x(gen), dist_y(gen)));
+        p.set_velocity(sf::Vector2f(dist_vx(gen), dist_vy(gen)));
+        p.set_mass(1.f);
+        p.set_restitution(0.75f);
+        p.set_color(sf::Color(dist_color(gen), dist_color(gen), dist_color(gen)));
+
+        particles.push_back(p);
+    }
+
+    std::size_t get_particle_count() const {
+        return particles.size();
+    }
 
 private:
     void create_boundaries() {
@@ -58,6 +99,10 @@ private:
         right_wall.end = sf::Vector2f(window_size.x - margin, window_size.y - margin);
         boundaries.push_back(right_wall);
 
+        Boundary roof;
+        roof.start = sf::Vector2f(margin, margin);
+        roof.end = sf::Vector2f(window_size.x - margin, margin);
+        boundaries.push_back(roof);
     }
 
     void create_particles(int total_num_of_particles) {

@@ -14,7 +14,7 @@ private:
     sf::Vector2f acceleration;
     float radius {0.f};
     float mass {1.f};
-    float restitution {0.9f};
+    float restitution {0.8f};
     sf::CircleShape shape;
 
 public:

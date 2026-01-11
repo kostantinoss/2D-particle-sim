@@ -181,6 +181,18 @@ namespace physics {
                     particle.set_velocity(new_velocity);
                 }
             }
+
+            // Roof collision
+            float roof_y = margin;
+            if (particle.get_position().y - particle.get_radius() <= roof_y) {
+                sf::Vector2f new_position {particle.get_position().x, roof_y + particle.get_radius()};
+                particle.set_position(new_position);
+
+                if (particle.get_velocity().y < 0) {
+                    sf::Vector2f new_velocity {particle.get_velocity().x, -particle.get_velocity().y * particle.get_restitution()};
+                    particle.set_velocity(new_velocity);
+                }
+            }
         }
     }
 

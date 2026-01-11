@@ -18,6 +18,13 @@ add_executable(main src/main.cpp)
 target_compile_features(main PRIVATE cxx_std_17)
 target_link_libraries(main PRIVATE SFML::Graphics)
 
+# Copy assets folder to build output directory
+add_custom_command(TARGET main POST_BUILD
+    COMMAND ${CMAKE_COMMAND} -E copy_directory
+    ${CMAKE_SOURCE_DIR}/assets
+    ${CMAKE_BINARY_DIR}/assets
+)
+
 # Batched rendering demo
 # add_executable(batched_demo src/batched_rendering_demo.cpp)
 # target_compile_features(batched_demo PRIVATE cxx_std_17)
