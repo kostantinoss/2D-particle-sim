@@ -20,7 +20,7 @@ private:
 public:
     Particle() {}
 
-    const sf::CircleShape& getShape() const {
+    const sf::CircleShape& get_shape() const {
         return shape;
     }
 

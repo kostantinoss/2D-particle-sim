@@ -27,7 +27,7 @@ public:
                          mouse_pos.x < window_size.x &&
                          mouse_pos.y > 0 &&
                          mouse_pos.y < window_size.y;
-                         
+
         for (int i = 0; i < substeps; i++) {
             for (auto& particle : particles) {
                 if (!mouse_in_bounds) {
@@ -53,7 +53,7 @@ public:
         target.draw(lines, states);
 
         for (const auto& particle: particles) {
-            target.draw(particle.getShape(), states);
+            target.draw(particle.get_shape(), states);
         }
     }
 

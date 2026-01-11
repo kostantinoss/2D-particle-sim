@@ -52,24 +52,28 @@ namespace physics {
 
     CollisionResult boundary_collision_detected(Particle& p, Boundary& b) {
         sf::Vector2f ps = p.get_position() - b.start;
-
         sf::Vector2f boundary_vector = b.end - b.start;
+
         float boundary_length = boundary_vector.length();
         sf::Vector2f boundary_unit_vector = boundary_vector / boundary_length;
+        
         float projection_length = utils::dot_product(ps, boundary_unit_vector);
-
-        // Clamp to segment bounds
         projection_length = std::clamp(projection_length, 0.f, boundary_length);
 
         sf::Vector2f collision_point = b.start + projection_length * boundary_unit_vector;
 
         float dist = utils::euclidean_distance(collision_point, p.get_position());
-        return {dist < p.get_radius(), collision_point};
+        bool hit = dist < p.get_radius();
+
+        return {hit, collision_point};
     }
 
     void handle_boundary_collision(Particle& p, Boundary& b, sf::Vector2f collision_point) {
         sf::Vector2f distance = collision_point - p.get_position();
-        if (distance.length() == 0.f) return;
+        if (distance.length() == 0.f) {
+            return;
+        }
+
         sf::Vector2f normal = distance / distance.length();
 
         // Move particle out of wall
@@ -88,7 +92,6 @@ namespace physics {
     }
 
     void handle_particle_collision(Particle& p1, Particle& p2) {
-        // ... code to handle collision
         sf::Vector2f distance = p1.get_position() - p2.get_position();
         sf::Vector2f normal = distance / utils::euclidean_distance(p1.get_position(), p2.get_position());
         
@@ -97,8 +100,6 @@ namespace physics {
             p2.set_position(p2.get_position() - (p2.get_radius()) * normal);
             return;
         }
-        
-        // sf::Vector2f normal = distance / utils::euclidean_distance(p1.get_position(), p2.get_position());
         
         float overlap = (p1.get_radius() + p2.get_radius()) - distance.length();
         if (overlap > 0) {
@@ -142,7 +143,6 @@ namespace physics {
     }
 
     void handle_environment_collisions(std::vector<Particle>& particles, std::vector<Boundary>& boundaries) {
-        // Using simple axis-aligned collision for performance
         float margin = 150.f;
         float ground_y = 1080.f - margin;
         float left_wall_x = margin;

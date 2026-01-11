@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.28)
-project(CMakeSFMLProject LANGUAGES CXX)
+project(ParticleSim LANGUAGES CXX)
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 
@@ -25,7 +25,3 @@ add_custom_command(TARGET main POST_BUILD
     ${CMAKE_BINARY_DIR}/assets
 )
 
-# Batched rendering demo
-# add_executable(batched_demo src/batched_rendering_demo.cpp)
-# target_compile_features(batched_demo PRIVATE cxx_std_17)
-# target_link_libraries(batched_demo PRIVATE SFML::Graphics)
