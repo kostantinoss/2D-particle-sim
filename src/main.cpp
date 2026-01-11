@@ -3,7 +3,7 @@
 #include <SFML/System/Vector2.hpp>
 #include <cmath>
 #include <vector>
-#include <math.h>
+#include "particle_simulation.hpp"
 
 
 
@@ -12,7 +12,7 @@ int main()
     auto window = sf::RenderWindow(sf::VideoMode({1920u, 1080u}), "CMake SFML Project");
     window.setFramerateLimit(144);
 
-    ParticleSim particleSim(200, window.getSize());  // 50 particles in circle
+    ParticleSim particleSim(200, window.getSize());
     sf::Clock clock;
     // sf::Clock spawn_timer;  // Timer for spawning particles (commented out for circle mode)
 
@@ -25,9 +25,18 @@ int main()
                 window.close();
             }
         }
-        
+
+        // Mouse force: left = attract, right = repel
+        sf::Vector2f mousePos = sf::Vector2f(sf::Mouse::getPosition(window));
+        float forceStrength = 0.f;
+        if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Left)) {
+            forceStrength = 2000.f;  // Attract
+        } else if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Right)) {
+            forceStrength = -2000.f;  // Repel
+        }
+
         sf::Time dt = clock.restart();
-        particleSim.update(dt);
+        particleSim.update(dt, mousePos, forceStrength);
         
         // Spawn a particle every 100ms (commented out for circle mode)
         // if (spawn_timer.getElapsedTime().asMilliseconds() >= 100) {

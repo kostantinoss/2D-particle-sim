@@ -1,8 +1,7 @@
-// Utils for the particle simulation
+#pragma once
 
 #include <cmath>
 #include <SFML/System/Vector2.hpp>
-#include "particle.hpp"
 
 
 namespace utils {
