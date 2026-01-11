@@ -25,18 +25,6 @@ public:
 
         for (int i = 0; i < substeps; i++) {
             for (auto& particle : particles) {
-                // // Apply mouse force
-                // if (force_strength != 0.f) {
-                //     sf::Vector2f dist_to_mouse = mouse_pos - particle.get_position();
-                //     float dist = dist_to_mouse.length();
-                //     sf::Vector2f normal = dist_to_mouse / dist_to_mouse.length();
-                //     if (dist > 1.f) {
-                //         sf::Vector2f force = force_strength * (dist_to_mouse / (dist));
-                //         sf::Vector2f newVel = particle.get_velocity() + force * sub_dt.asSeconds();
-                //         particle.set_velocity(newVel);
-                //     }
-                // }
-            
                 physics::apply_mouse_force(particle, mouse_pos, force_strength, sub_dt.asSeconds());
                 physics::update_particle_position(particle, sub_dt);
             }
